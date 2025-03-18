@@ -1,15 +1,16 @@
 package edu.phystech.hw1;
 
 import java.util.List;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class FactorialTest {
 
-
-    private static long factorial(int n) {
-        return 0;
+    private static long factorial(int x) {
+        if (x == 1 || x == 0) {
+            return 1;
+        }
+        return x * factorial(x - 1);
     }
 
     @Test
@@ -20,7 +21,6 @@ public class FactorialTest {
             Assertions.assertEquals(factorials.get(i), factorial(i + 1));
         }
     }
-
 
     @Test
     public void cornerCaseTest() {
