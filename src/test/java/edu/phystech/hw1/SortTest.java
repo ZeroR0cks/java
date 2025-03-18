@@ -8,7 +8,25 @@ import org.junit.jupiter.api.Assertions;
 public class SortTest {
 
     private static int[] sort(int[] nums) {
-        return nums;
+
+        int[] sortedArray = Arrays.copyOf(nums, nums.length);
+
+        int n = sortedArray.length;
+        boolean swapped;
+        do {
+            swapped = false;
+            for (int i = 1; i < n; i++) {
+                if (sortedArray[i - 1] > sortedArray[i]) {
+                    int temp = sortedArray[i - 1];
+                    sortedArray[i - 1] = sortedArray[i];
+                    sortedArray[i] = temp;
+                    swapped = true;
+                }
+            }
+            n--;
+        } while (swapped);
+
+        return sortedArray;
     }
 
     @Test
