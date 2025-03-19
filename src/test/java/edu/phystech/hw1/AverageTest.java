@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Assertions;
 
 public class AverageTest {
 
-    private static double average(int... numbers) {
+    private static double average(long... numbers) {
         if (numbers.length == 0) {
             return 0;
         }
 
-        int sum = 0;
-        for (int num : numbers) {
+        long sum = 0;
+        for (long num : numbers) {
             sum += num;
         }
         return (double) sum / numbers.length;
