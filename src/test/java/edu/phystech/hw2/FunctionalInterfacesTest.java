@@ -15,45 +15,50 @@ import org.junit.jupiter.api.Assertions;
 class ToUpperCaseOperator implements UnaryOperator<String> {
     @Override
     public String apply(String s) {
-        return s;
+        return s.toUpperCase();
     }
 }
 
 // Возвращает модуль максимума из двух модулей чисел
 class AbsMaxOperator implements BinaryOperator<Integer> {
-
     @Override
-    public Integer apply(Integer integer, Integer integer2) {
-        return 0;
+    public Integer apply(Integer a, Integer b) {
+        return Math.abs(a) >= Math.abs(b) ? Math.abs(a) : Math.abs(b);
     }
 }
 
 class StringLengthMoreThan5 implements Predicate<String> {
-
     @Override
     public boolean test(String s) {
-        return true;
+        return s != null && s.length() > 5;
     }
 }
 
 
 // Проверяет, является ли число квадратом
 class IsNumberASquareOfAnotherNumber implements Predicate<Integer> {
-
     @Override
-    public boolean test(Integer integer) {
-        return true;
+    public boolean test(Integer n) {
+        if (n < 0) return false;
+        int sqrt = (int) Math.sqrt(n);
+        return sqrt * sqrt == n;
     }
 }
 
 // Возвращает четные числа, начиная с from включительно, если в from нечетное число, то начиная с первого четного с from
 class EvenNumberSupplier implements Supplier<Integer> {
+    private int current;
 
-    public EvenNumberSupplier(int from) {}
+    public EvenNumberSupplier(int from) {
+        // Начать с первого чётного числа >= from
+        this.current = (from % 2 == 0) ? from : from + 1;
+    }
 
     @Override
     public Integer get() {
-        return 0;
+        int result = current;
+        current += 2;
+        return result;
     }
 }
 
