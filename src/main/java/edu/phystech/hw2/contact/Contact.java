@@ -6,7 +6,7 @@ public record Contact(String username, String email) implements Comparable<Conta
 
     public Contact {
         // Валидация username
-        if (username == null || username.isBlank()) {
+        if (username == null || username.trim().isEmpty()) {
             throw new InvalidContactFieldException("username");
         }
 
