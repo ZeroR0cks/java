@@ -1,22 +1,36 @@
 package edu.phystech.hw3;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class SetUtils {
-    public static <E> Set<E> union(Set<? extends E> s1, Set<? extends E> s2) {
-        return null;
+
+
+    public static <T> Set<T> union(Set<T> first, Set<T> second) {
+        Set<T> result = new HashSet<>(first);
+        result.addAll(second);
+        return result;
     }
 
-    public static <E> Set<E> intersection(Set<? extends E> s1, Set<? extends E> s2) {
-        return null;
+
+    public static <T> Set<T> intersection(Set<T> first, Set<T> second) {
+        Set<T> result = new HashSet<>(first);
+        result.retainAll(second);
+        return result;
     }
 
-    public static <E> Set<E> difference(Set<? extends E> s1, Set<? extends E> s2) {
-        return null;
+
+    public static <T> Set<T> difference(Set<T> first, Set<T> second) {
+        Set<T> result = new HashSet<>(first);
+        result.removeAll(second);
+        return result;
     }
 
-    public static <E> Set<E> symmetricDifference(Set<? extends E> s1, Set<? extends E> s2) {
-        return null;
-    }
 
+    public static <T> Set<T> symmetricDifference(Set<T> first, Set<T> second) {
+        Set<T> union = union(first, second);  // Находим объединение двух множеств
+        Set<T> intersection = intersection(first, second);  // Находим пересечение двух множеств
+        union.removeAll(intersection);  // Удаляем пересечение из объединения, получая симметрическую разность
+        return union;
+    }
 }
