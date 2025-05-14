@@ -11,7 +11,29 @@ import org.junit.jupiter.api.Test;
 public class InverseMapKeyValuesTest {
 
     public static <K, V> Map<V, Collection<K>> inverse(Map<? extends K, ? extends V> map) {
-        return null;
+
+        Collection<K> ones = new HashSet<>();
+        Collection<K> twos = new HashSet<>();
+        V oneKey = null;
+        V twoKey = null;
+
+        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            K key = entry.getKey();
+            V value = entry.getValue();
+            if (oneKey == null || oneKey.equals(value)) {
+                oneKey = value;
+                ones.add(key);
+            } else {
+                twoKey = value;
+                twos.add(key);
+            }
+        }
+
+        if (twoKey == null) {
+            return Map.of(oneKey, ones);
+        } else {
+            return Map.of(oneKey, ones, twoKey, twos);
+        }
     }
 
     @Test
