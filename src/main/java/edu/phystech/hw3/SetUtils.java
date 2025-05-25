@@ -28,9 +28,9 @@ public class SetUtils {
 
 
     public static <T> Set<T> symmetricDifference(Set<T> first, Set<T> second) {
-        Set<T> union = union(first, second);  
-        Set<T> intersection = intersection(first, second);  
-        union.removeAll(intersection);  
+        Set<T> union = union(first, second);
+        Set<T> intersection = intersection(first, second);
+        union.removeAll(intersection);
         return union;
     }
 }

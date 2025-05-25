@@ -1,26 +1,37 @@
 package edu.phystech.hw5.service;
 
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
+import edu.phystech.hw5.annotation.Cacheable;
 
-/**
- * @author kzlv4natoly
- */
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 public class CacheableInvocationHandler implements InvocationHandler {
-    // Здесь необходимо реализовать логику по обработке @cacheable и вызову конкретного метода объекта
 
     private final Object target;
+    private final Map<Method, Map<Object, Object>> cache = new HashMap<>();
 
     public CacheableInvocationHandler(Object target) {
         this.target = target;
     }
 
     @Override
-    public Object invoke(Object o, Method method, Object[] arguments) throws Throwable
-    {
-       return method.invoke(target, arguments);
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        if (method.isAnnotationPresent(Cacheable.class) && args != null && args.length == 1) {
+            Object arg = args[0];
+            cache.putIfAbsent(method, new HashMap<>());
+            Map<Object, Object> methodCache = cache.get(method);
+
+            if (methodCache.containsKey(arg)) {
+                return methodCache.get(arg);
+            } else {
+                Object result = method.invoke(target, args);
+                methodCache.put(arg, result);
+                return result;
+            }
+        }
+
+        return method.invoke(target, args);
     }
 }
